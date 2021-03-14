@@ -1,4 +1,4 @@
 # ShaWorld-Backend
 
-[ShaWorld Public Notion](https://www.notion.so/3ef6cf69098b4d1b9c5c836253378aee)
+[ShaWorld Public Notion](https://www.notion.so/ShaWorld-08a3f0613f8e4a228a554a20d77b9ea9)
 
