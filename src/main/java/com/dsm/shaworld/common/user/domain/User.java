@@ -1,10 +1,10 @@
-package com.dsm.shaworld.common.auth.domain;
+package com.dsm.shaworld.common.user.domain;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "auth")
-public class Auth {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
