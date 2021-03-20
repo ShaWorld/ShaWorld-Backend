@@ -1,26 +1,31 @@
-package com.dsm.shaworld.common.user.domain;
+package com.dsm.shaworld.common.user.domain.entity;
 
+import lombok.*;
 import javax.persistence.*;
 
+@Getter
+@Builder
 @Entity
 @Table(name = "auth")
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "user_email")
+    @Column(name = "user_email", nullable = false)
     private String userEmail;
 
-    @Column(name = "user_nickname")
+    @Column(name = "user_nickname", nullable = false, length = 8)
     private String userNickname;
 
-    @Column(name = "user_password")
+    @Column(name = "user_password", nullable = false, length = 20)
     private String userPassword;
 
-    @Column(name = "user_profile")
-    private String userProfile;
+    @Column(name = "user_profile", nullable = true)
+    private String userProfile = null;
 
     public int getId() {
         return id;
