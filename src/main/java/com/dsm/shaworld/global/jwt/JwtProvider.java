@@ -1,4 +1,4 @@
-package com.dsm.shaworld.global.security;
+package com.dsm.shaworld.global.jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
