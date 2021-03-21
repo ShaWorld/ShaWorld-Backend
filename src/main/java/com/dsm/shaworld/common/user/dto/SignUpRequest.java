@@ -2,21 +2,23 @@ package com.dsm.shaworld.common.user.dto;
 
 import lombok.Getter;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Getter
 public class SignUpRequest {
-    @NotEmpty
+    @NotBlank
     @Email
     private String email;
 
-    @NotEmpty
+    @NotBlank
     @Size(min = 2, max = 8)
     private String nickname;
 
-    @NotEmpty
+    @NotBlank
     @Size(min = 8, max = 20)
     private String password;
+
+    @NotBlank
+    @Size(min = 8, max = 20)
+    private String passwordConfirm;
 }
