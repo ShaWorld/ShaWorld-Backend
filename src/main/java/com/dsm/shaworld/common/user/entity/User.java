@@ -1,4 +1,4 @@
-package com.dsm.shaworld.common.user.domain.entity;
+package com.dsm.shaworld.common.user.entity;
 
 import lombok.*;
 import javax.persistence.*;
@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Getter
 @Builder
 @Entity
-@Table(name = "auth")
+@Table(name = "user")
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -27,40 +27,16 @@ public class User {
     @Column(name = "user_profile", nullable = true)
     private String userProfile = null;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUserEmail() {
-        return userEmail;
-    }
-
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
-    }
-
-    public String getUserNickname() {
-        return userNickname;
     }
 
     public void setUserNickname(String userNickname) {
         this.userNickname = userNickname;
     }
 
-    public String getUserPassword() {
-        return userPassword;
-    }
-
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
-    }
-
-    public String getUserProfile() {
-        return userProfile;
     }
 
     public void setUserProfile(String userProfile) {
