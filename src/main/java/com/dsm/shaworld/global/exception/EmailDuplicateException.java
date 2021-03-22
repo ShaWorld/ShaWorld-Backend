@@ -9,6 +9,7 @@ public class EmailDuplicateException extends CommonException {
         super(
             "EMAIL_DUPLICATION",
             String.format("이미 사용중인 이메일입니다. [%s]", email),
-            HttpStatus.CONFLICT);
+            HttpStatus.CONFLICT
+        );
     }
 }
