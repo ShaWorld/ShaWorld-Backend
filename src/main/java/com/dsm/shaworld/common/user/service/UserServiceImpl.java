@@ -4,7 +4,7 @@ import com.dsm.shaworld.common.user.dto.SignUpRequest;
 import com.dsm.shaworld.common.user.entity.User;
 import com.dsm.shaworld.common.user.repository.UserRepository;
 import com.dsm.shaworld.global.exception.EmailDuplicateException;
-import com.dsm.shaworld.global.exception.NicknameDuplicationException;
+import com.dsm.shaworld.global.exception.NicknameDuplicateException;
 import com.dsm.shaworld.global.exception.PasswordMismatchException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
         if(emailDuplicationCheck(request.getEmail()))
             throw new EmailDuplicateException(request.getEmail());
         if(nicknameDuplicationCheck(request.getNickname()))
-            throw new NicknameDuplicationException(request.getNickname());
+            throw new NicknameDuplicateException(request.getNickname());
 
         userRepository.save(
             User.builder()
