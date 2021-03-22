@@ -15,7 +15,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void signUp(SignUpRequest request) {
-        if(request.getPassword() != request.getPasswordConfirm())
+        if(!request.getPassword().equals(request.getPasswordConfirm()))
             throw new PasswordMismatchException(request.getPassword(), request.getPasswordConfirm());
+
+        userRepository.save(
+                
+        )
     }
 }
