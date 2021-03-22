@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 class DatabaseConfig {
     @Value("${DATABASE_DRIVER:com.mysql.cj.jdbc.Driver}")
     private String driverClassName;
-    @Value("${DATABASE_URL:jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC}")
+    @Value("${DATABASE_URL:jdbc:mysql://localhost:3306/shaworld?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC}")
     private String url;
     @Value("${DATABASE_USERNAME:root}")
     private String username;
