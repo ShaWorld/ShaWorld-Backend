@@ -1,5 +1,10 @@
 package com.dsm.shaworld.global.exception.handler;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ExceptionResponse {
     private String code;
     private String message;
