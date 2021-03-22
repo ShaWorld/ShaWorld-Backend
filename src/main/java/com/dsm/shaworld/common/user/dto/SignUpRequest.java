@@ -16,11 +16,11 @@ public class SignUpRequest {
 
     @NotBlank
     @Size(min = 8, max = 20)
-    @Pattern(regexp = "^(?=.*\\d)(?=.*[~`!@#$%\\^&*()-])(?=.*[a-z]).{8,20}$")
+    @Pattern(regexp = "^[a-z0-9!@#$%^&*]{8,20}$")
     private String password;
 
     @NotBlank
     @Size(min = 8, max = 20)
-    @Pattern(regexp = "^(?=.*\\d)(?=.*[~`!@#$%\\^&*()-])(?=.*[a-z]).{8,20}$")
+    @Pattern(regexp = "^[a-zA-Z0-9!@#$%^&*]{8,20}$")
     private String passwordConfirm;
 }
