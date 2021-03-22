@@ -1,6 +1,7 @@
 package com.dsm.shaworld.common.user.service;
 
 import com.dsm.shaworld.common.user.dto.SignUpRequest;
+import com.dsm.shaworld.common.user.entity.User;
 import com.dsm.shaworld.common.user.repository.UserRepository;
 import com.dsm.shaworld.global.authorization.JwtProvider;
 import com.dsm.shaworld.global.exception.PasswordMismatchException;
@@ -19,7 +20,11 @@ public class UserServiceImpl implements UserService {
             throw new PasswordMismatchException(request.getPassword(), request.getPasswordConfirm());
 
         userRepository.save(
-                
-        )
+            User.builder()
+            .userEmail(request.getEmail())
+            .userNickname(request.getNickname())
+            .userPassword(request.getPassword())
+            .build()
+        );
     }
 }
