@@ -3,7 +3,7 @@ package com.dsm.shaworld.common.user.service;
 import com.dsm.shaworld.common.user.dto.SignUpRequest;
 import com.dsm.shaworld.common.user.entity.User;
 import com.dsm.shaworld.common.user.repository.UserRepository;
-import com.dsm.shaworld.global.authorization.JwtProvider;
+import com.dsm.shaworld.global.exception.EmailDuplicateException;
 import com.dsm.shaworld.global.exception.PasswordMismatchException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,12 +12,18 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final JwtProvider jwtProvider;
+
+    @Override
+    public boolean emailDuplicationCheck(String userEmail) {
+        return userRepository.existsByUserEmail(userEmail);
+    }
 
     @Override
     public void signUp(SignUpRequest request) {
         if(!request.getPassword().equals(request.getPasswordConfirm()))
             throw new PasswordMismatchException(request.getPassword(), request.getPasswordConfirm());
+        if(emailDuplicationCheck(request.getEmail()))
+            throw new EmailDuplicateException(request.getEmail());
 
         userRepository.save(
             User.builder()
