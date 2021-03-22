@@ -4,6 +4,7 @@ import com.dsm.shaworld.common.user.dto.SignUpRequest;
 import com.dsm.shaworld.common.user.entity.User;
 import com.dsm.shaworld.common.user.repository.UserRepository;
 import com.dsm.shaworld.global.exception.EmailDuplicateException;
+import com.dsm.shaworld.global.exception.NicknameDuplicationException;
 import com.dsm.shaworld.global.exception.PasswordMismatchException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,11 +20,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean nicknameDuplicationCheck(String userNickname) {
+        return userRepository.existsByUserNickname(userNickname);
+    }
+
+    @Override
     public void signUp(SignUpRequest request) {
         if(!request.getPassword().equals(request.getPasswordConfirm()))
             throw new PasswordMismatchException(request.getPassword(), request.getPasswordConfirm());
         if(emailDuplicationCheck(request.getEmail()))
             throw new EmailDuplicateException(request.getEmail());
+        if(nicknameDuplicationCheck(request.getNickname()))
+            throw new NicknameDuplicationException(request.getNickname());
 
         userRepository.save(
             User.builder()
