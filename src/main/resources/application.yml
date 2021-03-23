@@ -4,4 +4,4 @@ auth:
 
 server:
   port:
-    8001
+    8000
