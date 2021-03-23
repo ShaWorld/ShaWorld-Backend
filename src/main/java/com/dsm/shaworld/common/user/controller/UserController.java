@@ -20,18 +20,17 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/getUser")
+    @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
-    public User getUserInfoByUserEmail(@RequestParam("email") String email) {
-        System.out.println("a");
-        return userService.getInfoByUserEmail(email);
+    public User getUserInfoByUserEmail(@RequestHeader(value="Authorization") String token) {
+        return userService.getInfoByToken(token);
     }
 
-    @PostMapping("/signIn")
+    @PostMapping("/signin")
     @ResponseStatus(value = HttpStatus.OK)
     public SignInResponse signIn(@RequestBody @Valid SignInRequest request) { return userService.signIn(request); }
 
-    @PostMapping("/signUp")
+    @PostMapping("/signup")
     @ResponseStatus(value = HttpStatus.CREATED)
     public void signUp(@RequestBody @Valid SignUpRequest request) {
         userService.signUp(request);
@@ -39,5 +38,5 @@ public class UserController {
 
     @DeleteMapping("/deleteUser")
     @ResponseStatus(value = HttpStatus.OK)
-    public void deleteUser(@RequestHeader(value="authorization") String token) { userService.deleteUser(token); }
+    public void deleteUser(@RequestHeader(value="Authorization") String token) { userService.deleteUser(token); }
 }
