@@ -1,5 +1,8 @@
 package com.dsm.shaworld.global.authorization;
 
+import com.dsm.shaworld.global.exception.InvalidTokenException;
+import com.dsm.shaworld.global.exception.JwtExpiredException;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,13 +35,13 @@ public class JwtProvider {
         return null;
     }
 
-    public boolean validateToken(String token) {
+    public String validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
-            return true;
+            return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        } catch(ExpiredJwtException e) {
+            throw new JwtExpiredException();
         } catch(Exception e) {
-            System.out.println(e);
-            return false;
+            throw new InvalidTokenException();
         }
     }
 
