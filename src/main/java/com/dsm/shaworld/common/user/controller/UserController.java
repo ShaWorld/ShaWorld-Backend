@@ -36,4 +36,8 @@ public class UserController {
     public void signUp(@RequestBody @Valid SignUpRequest request) {
         userService.signUp(request);
     }
+
+    @DeleteMapping("/deleteUser")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void deleteUser(@RequestHeader(value="authorization") String token) { userService.deleteUser(token); }
 }
