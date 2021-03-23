@@ -6,5 +6,4 @@ import lombok.*;
 @Builder
 public class SignInResponse {
     private String accessToken;
-    private String refreshToken;
 }
