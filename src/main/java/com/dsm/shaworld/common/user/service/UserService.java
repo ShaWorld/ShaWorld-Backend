@@ -28,8 +28,7 @@ public class UserService {
         if(!request.getPassword().equals(user.getUserPassword()))
             throw new PasswordMismatchException(request.getPassword());
         return SignInResponse.builder()
-            .accessToken(jwtProvider.generateAccessToken(request.getEmail()))
-            .refreshToken(jwtProvider.generateRefreshToken(request.getEmail()))
+            .token(jwtProvider.generateAccessToken(request.getEmail()))
             .build();
     }
 
@@ -56,5 +55,14 @@ public class UserService {
             .userPassword(request.getPassword())
             .build()
         );
+    }
+
+    public String getEmailFormToken(String token) {
+        return jwtProvider.validateToken(token);
+    }
+
+    public void deleteUser(String token) {
+        String email = getEmailFormToken(token);
+        userRepository.delete(getInfoByUserEmail(email));
     }
 }
