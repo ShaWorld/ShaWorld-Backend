@@ -19,6 +19,11 @@ public class UserService {
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
 
+    public User getInfoByToken(String token) {
+        String email = getEmailFormToken(token);
+        return getInfoByUserEmail(email);
+    }
+
     public User getInfoByUserEmail(String userEmail) {
         return userRepository.findByUserEmail(userEmail).orElseThrow(() -> new UserNotFoundException(userEmail));
     }
