@@ -5,5 +5,5 @@ import lombok.*;
 @Getter
 @Builder
 public class SignInResponse {
-    private String accessToken;
+    private String token;
 }
