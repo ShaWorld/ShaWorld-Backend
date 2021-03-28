@@ -14,11 +14,4 @@ public class CommonExceptionHandler {
             e.getStatus()
         );
     }
-
-    @ExceptionHandler(RuntimeException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ExceptionResponse runtimeExceptionHandler(RuntimeException e) {
-        e.printStackTrace();
-        return new ExceptionResponse("INTERNAL_SERVER_ERROR", "문제가 발생하였다.");
-    }
 }
