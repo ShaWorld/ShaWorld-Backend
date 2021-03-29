@@ -1,9 +1,6 @@
 package com.dsm.shaworld.common.user.service;
 
-import com.dsm.shaworld.common.user.dto.SignInRequest;
-import com.dsm.shaworld.common.user.dto.SignInResponse;
-import com.dsm.shaworld.common.user.dto.SignUpRequest;
-import com.dsm.shaworld.common.user.dto.UserInfoResponse;
+import com.dsm.shaworld.common.user.dto.*;
 import com.dsm.shaworld.common.user.entity.User;
 import com.dsm.shaworld.common.user.repository.UserRepository;
 import com.dsm.shaworld.global.authorization.JwtProvider;
@@ -80,5 +77,21 @@ public class UserService {
     public void deleteUser(String token) {
         String email = getEmailFromToken(token);
         userRepository.delete(getInfoByUserEmail(email));
+    }
+
+    public void changeInfo(String token, ChangeInfoRequest request) {
+        User user = getInfoByTokenForServer(token);
+
+        if(request.getChangedNickname() != "") {
+            user.setUserNickname(request.getChangedNickname());
+        }
+        if(request.getChangedPassword() != "") {
+            user.setUserPassword(request.getChangedPassword());
+        }
+        if(request.getChangedProfile() != "") {
+            user.setUserProfile(request.getChangedProfile());
+        }
+
+        return;
     }
 }
