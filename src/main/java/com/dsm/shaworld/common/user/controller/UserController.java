@@ -1,10 +1,6 @@
 package com.dsm.shaworld.common.user.controller;
 
-import com.dsm.shaworld.common.user.dto.SignInRequest;
-import com.dsm.shaworld.common.user.dto.SignInResponse;
-import com.dsm.shaworld.common.user.dto.SignUpRequest;
-import com.dsm.shaworld.common.user.dto.UserInfoResponse;
-import com.dsm.shaworld.common.user.entity.User;
+import com.dsm.shaworld.common.user.dto.*;
 import com.dsm.shaworld.common.user.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +34,13 @@ public class UserController {
         userService.signUp(request);
     }
 
-    @DeleteMapping("/deleteUser")
+    @DeleteMapping("/deleteuser")
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteUser(@RequestHeader(value="Authorization") String token) { userService.deleteUser(token); }
+
+    @PatchMapping("/changeinfo")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void changeInfo(@RequestHeader(value="Authorization") String token, @RequestBody @Valid ChangeInfoRequest request) {
+        userService.changeInfo(token, request);
+    }
 }
