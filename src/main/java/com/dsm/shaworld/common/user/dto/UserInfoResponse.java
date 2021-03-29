@@ -5,6 +5,8 @@ import lombok.*;
 @Getter
 @Builder
 public class UserInfoResponse {
+    private String userEmail;
+
     private String userNickname;
 
     private String userProfile;
