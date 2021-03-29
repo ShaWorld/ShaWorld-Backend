@@ -23,6 +23,7 @@ public class UserService {
     public UserInfoResponse getInfoByToken(String token) {
         User user = getInfoByTokenForServer(token);
         return UserInfoResponse.builder()
+                .userEmail(user.getUserEmail())
                 .userNickname(user.getUserNickname())
                 .userProfile(user.getUserProfile())
                 .build();
