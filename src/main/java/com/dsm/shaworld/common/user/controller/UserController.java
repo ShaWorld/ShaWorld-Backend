@@ -3,6 +3,7 @@ package com.dsm.shaworld.common.user.controller;
 import com.dsm.shaworld.common.user.dto.SignInRequest;
 import com.dsm.shaworld.common.user.dto.SignInResponse;
 import com.dsm.shaworld.common.user.dto.SignUpRequest;
+import com.dsm.shaworld.common.user.dto.UserInfoResponse;
 import com.dsm.shaworld.common.user.entity.User;
 import com.dsm.shaworld.common.user.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class UserController {
 
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
-    public User getUserInfoByUserEmail(@RequestHeader(value="Authorization") String token) {
+    public UserInfoResponse getUserInfoByUserEmail(@RequestHeader(value="Authorization") String token) {
         return userService.getInfoByToken(token);
     }
 
