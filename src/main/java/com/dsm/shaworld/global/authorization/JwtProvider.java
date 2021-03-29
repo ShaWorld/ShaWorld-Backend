@@ -27,8 +27,7 @@ public class JwtProvider {
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
-    public String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
+    public String resolveToken(String bearerToken) {
         if(bearerToken != null && bearerToken.startsWith("Bearer")) {
             return bearerToken.substring(7);
         }
