@@ -3,6 +3,7 @@ package com.dsm.shaworld.common.user.service;
 import com.dsm.shaworld.common.user.dto.SignInRequest;
 import com.dsm.shaworld.common.user.dto.SignInResponse;
 import com.dsm.shaworld.common.user.dto.SignUpRequest;
+import com.dsm.shaworld.common.user.dto.UserInfoResponse;
 import com.dsm.shaworld.common.user.entity.User;
 import com.dsm.shaworld.common.user.repository.UserRepository;
 import com.dsm.shaworld.global.authorization.JwtProvider;
@@ -19,8 +20,16 @@ public class UserService {
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
 
-    public User getInfoByToken(String token) {
-        String email = getEmailFormToken(token);
+    public UserInfoResponse getInfoByToken(String token) {
+        User user = getInfoByTokenForServer(token);
+        return UserInfoResponse.builder()
+                .userNickname(user.getUserNickname())
+                .userProfile(user.getUserProfile())
+                .build();
+    }
+
+    public User getInfoByTokenForServer(String token) {
+        String email = getEmailFromToken(token);
         return getInfoByUserEmail(email);
     }
 
@@ -62,12 +71,13 @@ public class UserService {
         );
     }
 
-    public String getEmailFormToken(String token) {
-        return jwtProvider.validateToken(token);
+    public String getEmailFromToken(String token) {
+        String resolvedToken = jwtProvider.resolveToken(token);
+        return jwtProvider.validateToken(resolvedToken);
     }
 
     public void deleteUser(String token) {
-        String email = getEmailFormToken(token);
+        String email = getEmailFromToken(token);
         userRepository.delete(getInfoByUserEmail(email));
     }
 }
