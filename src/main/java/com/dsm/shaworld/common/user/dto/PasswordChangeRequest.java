@@ -12,10 +12,10 @@ public class PasswordChangeRequest {
 
     @NotBlank
     @Pattern(regexp = "^[a-z0-9!@#$%^&*]{8,20}$")
-    private String changedPassword;
+    private String changePassword;
 
     @NotBlank
     @Pattern(regexp = "^[a-z0-9!@#$%^&*]{8,20}$")
-    private String changedPasswordConfirm;
+    private String changePasswordConfirm;
 
 }
