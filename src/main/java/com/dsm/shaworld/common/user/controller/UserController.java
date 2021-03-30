@@ -38,9 +38,22 @@ public class UserController {
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteUser(@RequestHeader(value="Authorization") String token) { userService.deleteUser(token); }
 
-    @PatchMapping("/changeinfo")
+    @PatchMapping("/nickname")
     @ResponseStatus(value = HttpStatus.OK)
-    public void changeInfo(@RequestHeader(value="Authorization") String token, @RequestBody @Valid ChangeInfoRequest request) {
-        userService.changeInfo(token, request);
+    public void changeInfo(@RequestHeader(value="Authorization") String token, @RequestBody @Valid NicknameChangeRequest request) {
+        userService.changeNickname(token, request);
     }
+
+    @PatchMapping("/password")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void changePassword(@RequestHeader(value="Authorization") String token, @RequestBody @Valid PasswordChangeRequest request) {
+        userService.changePassword(token, request);
+    }
+
+    @PatchMapping("/profile")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void changeProfile(@RequestHeader(value="Authorization") String token, @RequestBody @Valid ProfileChangeRequest request) {
+        userService.changeProfile(token, request);
+    }
+
 }
