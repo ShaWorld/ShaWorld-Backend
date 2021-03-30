@@ -4,12 +4,10 @@ import com.dsm.shaworld.common.user.dto.*;
 import com.dsm.shaworld.common.user.entity.User;
 import com.dsm.shaworld.common.user.repository.UserRepository;
 import com.dsm.shaworld.global.authorization.JwtProvider;
-import com.dsm.shaworld.global.exception.EmailDuplicateException;
-import com.dsm.shaworld.global.exception.NicknameDuplicateException;
-import com.dsm.shaworld.global.exception.PasswordMismatchException;
-import com.dsm.shaworld.global.exception.UserNotFoundException;
+import com.dsm.shaworld.global.exception.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -79,19 +77,35 @@ public class UserService {
         userRepository.delete(getInfoByUserEmail(email));
     }
 
-    public void changeInfo(String token, ChangeInfoRequest request) {
+    @Transactional
+    public void changeNickname(String token, NicknameChangeRequest request) {
         User user = getInfoByTokenForServer(token);
 
-        if(request.getChangedNickname() != "") {
-            user.setUserNickname(request.getChangedNickname());
-        }
-        if(request.getChangedPassword() != "") {
-            user.setUserPassword(request.getChangedPassword());
-        }
-        if(request.getChangedProfile() != "") {
-            user.setUserProfile(request.getChangedProfile());
-        }
+        if(nicknameDuplicationCheck(request.getChangedNickname()))
+            throw new NicknameDuplicateException(request.getChangedNickname());
 
+        user.setUserNickname(request.getChangedNickname());
+        return;
+    }
+
+    @Transactional
+    public void changePassword(String token, PasswordChangeRequest request) {
+        User user = getInfoByTokenForServer(token);
+
+        if(!request.getCurrentPassword().equals(user.getUserPassword()))
+            throw new PasswordMismatchException(request.getCurrentPassword());
+        if(!request.getChangedPassword().equals(request.getChangedPasswordConfirm()))
+            throw new PasswordMismatchException(request.getChangedPassword(), request.getChangedPasswordConfirm());
+
+        user.setUserPassword(request.getChangedPassword());
+        return;
+    }
+
+    @Transactional
+    public void changeProfile(String token, ProfileChangeRequest request) {
+        User user = getInfoByTokenForServer(token);
+
+        user.setUserProfile(request.getChangedProfile());
         return;
     }
 }
