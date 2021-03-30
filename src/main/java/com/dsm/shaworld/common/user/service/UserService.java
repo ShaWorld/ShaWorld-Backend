@@ -94,10 +94,10 @@ public class UserService {
 
         if(!request.getCurrentPassword().equals(user.getUserPassword()))
             throw new PasswordMismatchException(request.getCurrentPassword());
-        if(!request.getChangedPassword().equals(request.getChangedPasswordConfirm()))
-            throw new PasswordMismatchException(request.getChangedPassword(), request.getChangedPasswordConfirm());
+        if(!request.getChangePassword().equals(request.getChangePasswordConfirm()))
+            throw new PasswordMismatchException(request.getChangePassword(), request.getChangePasswordConfirm());
 
-        user.setUserPassword(request.getChangedPassword());
+        user.setUserPassword(request.getChangePassword());
         return;
     }
 
