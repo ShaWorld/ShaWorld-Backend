@@ -4,8 +4,10 @@ import com.dsm.shaworld.domain.user.dto.*;
 import com.dsm.shaworld.domain.user.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @CrossOrigin
 @RestController
@@ -52,8 +54,8 @@ public class UserController {
 
     @PatchMapping("/profile")
     @ResponseStatus(value = HttpStatus.OK)
-    public void changeProfile(@RequestHeader(value="Authorization") String token, @RequestBody @Valid ProfileChangeRequest request) {
-        userService.changeProfile(token, request);
+    public void changeProfile(@RequestHeader(value="Authorization") String token, @RequestPart("profile") @Valid MultipartFile file) throws IOException {
+        userService.changeProfile(token, file);
     }
 
 }
