@@ -1,8 +1,8 @@
-package com.dsm.shaworld.common.user.service;
+package com.dsm.shaworld.domain.user.service;
 
-import com.dsm.shaworld.common.user.dto.*;
-import com.dsm.shaworld.common.user.entity.User;
-import com.dsm.shaworld.common.user.repository.UserRepository;
+import com.dsm.shaworld.domain.user.dto.*;
+import com.dsm.shaworld.domain.user.entity.User;
+import com.dsm.shaworld.domain.user.repository.UserRepository;
 import com.dsm.shaworld.global.authorization.JwtProvider;
 import com.dsm.shaworld.global.exception.*;
 import lombok.RequiredArgsConstructor;

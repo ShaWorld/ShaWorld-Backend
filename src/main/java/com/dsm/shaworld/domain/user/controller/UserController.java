@@ -1,7 +1,7 @@
-package com.dsm.shaworld.common.user.controller;
+package com.dsm.shaworld.domain.user.controller;
 
-import com.dsm.shaworld.common.user.dto.*;
-import com.dsm.shaworld.common.user.service.UserService;
+import com.dsm.shaworld.domain.user.dto.*;
+import com.dsm.shaworld.domain.user.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

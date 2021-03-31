@@ -1,4 +1,4 @@
-package com.dsm.shaworld.common.user.entity;
+package com.dsm.shaworld.domain.user.entity;
 
 import lombok.*;
 import javax.persistence.*;

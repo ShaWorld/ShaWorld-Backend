@@ -1,4 +1,4 @@
-package com.dsm.shaworld.common.user.dto;
+package com.dsm.shaworld.domain.user.dto;
 
 import lombok.Getter;
 
