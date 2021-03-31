@@ -1,19 +1,26 @@
 package com.dsm.shaworld.domain.user.service;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.dsm.shaworld.domain.user.dto.*;
 import com.dsm.shaworld.domain.user.entity.User;
 import com.dsm.shaworld.domain.user.repository.UserRepository;
 import com.dsm.shaworld.global.authorization.JwtProvider;
 import com.dsm.shaworld.global.exception.*;
+import com.dsm.shaworld.global.s3service.S3Service;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
+    private final S3Service s3Service;
 
     public UserInfoResponse getInfoByToken(String token) {
         User user = getInfoByTokenForServer(token);
@@ -102,10 +109,12 @@ public class UserService {
     }
 
     @Transactional
-    public void changeProfile(String token, ProfileChangeRequest request) {
+    public void changeProfile(String token, MultipartFile file) throws IOException {
         User user = getInfoByTokenForServer(token);
 
-        user.setUserProfile(request.getChangedProfile());
+        String imgPath = s3Service.uploadS3File(file);
+        user.setUserProfile(imgPath);
+
         return;
     }
 }
