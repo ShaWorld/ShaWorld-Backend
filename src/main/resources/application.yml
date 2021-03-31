@@ -1,7 +1,0 @@
-auth:
-  jwt:
-    secret: ${SECRET_KEY:wanseoSecret}
-
-server:
-  port:
-    8000
