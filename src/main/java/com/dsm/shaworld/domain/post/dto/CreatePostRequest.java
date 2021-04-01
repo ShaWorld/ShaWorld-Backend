@@ -9,9 +9,6 @@ import java.time.LocalDateTime;
 
 @Getter
 public class CreatePostRequest {
-    @Nullable
-    private MultipartFile thumbnail;
-
     @NotBlank
     private String title;
 
@@ -22,7 +19,7 @@ public class CreatePostRequest {
     private String detail;
 
     @NotBlank
-    private int price;
+    private String price;
 
     @NotBlank
     private LocalDateTime date;
