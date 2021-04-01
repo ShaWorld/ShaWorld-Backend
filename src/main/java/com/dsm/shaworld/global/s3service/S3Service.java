@@ -50,8 +50,4 @@ public class S3Service {
 
         return s3Client.getUrl(bucket, fileName).toString();
     }
-
-    public void deleteS3File(String objectName) {
-        s3Client.deleteObject(bucket, objectName);
-    }
 }
