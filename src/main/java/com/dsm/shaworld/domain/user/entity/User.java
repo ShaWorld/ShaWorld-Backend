@@ -27,10 +27,6 @@ public class User {
     @Column(name = "user_profile", nullable = true)
     private String userProfile = null;
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
     public void setUserNickname(String userNickname) {
         this.userNickname = userNickname;
     }
