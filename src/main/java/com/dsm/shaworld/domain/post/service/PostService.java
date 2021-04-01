@@ -1,6 +1,5 @@
 package com.dsm.shaworld.domain.post.service;
 
-import com.dsm.shaworld.domain.post.dto.CreatePostRequest;
 import com.dsm.shaworld.domain.post.entity.Post;
 import com.dsm.shaworld.domain.post.repository.PostRepository;
 import com.dsm.shaworld.domain.user.entity.User;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +19,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final S3Service s3Service;
 
-    public void createPost(String token, CreatePostRequest request, MultipartFile file) throws IOException {
+    public void createPost(String token, String title, String address, String detail, int price, LocalDateTime date, MultipartFile file) throws IOException {
         User user = userService.getInfoByTokenForServer(token);
 
         String thumbnailPath = s3Service.uploadS3File(file);
@@ -27,12 +27,12 @@ public class PostService {
         postRepository.save(
             Post.builder()
             .postThumbnail(thumbnailPath)
-            .postTitle(request.getTitle())
+            .postTitle(title)
             .postAuthor(user)
-            .postAddress(request.getAddress())
-            .postDetail(request.getDetail())
-            .postPrice(Integer.parseInt(request.getPrice()))
-            .postDate(request.getDate())
+            .postAddress(address)
+            .postDetail(detail)
+            .postPrice(price)
+            .postDate(date)
             .build()
         );
 
