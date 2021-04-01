@@ -1,8 +1,10 @@
 package com.dsm.shaworld.domain.post.entity;
 
+import com.dsm.shaworld.domain.user.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -13,8 +15,8 @@ import javax.persistence.*;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+    @Column(name = "post_id")
+    private int postId;
 
     @Column(name = "post_thumbnail", nullable = true)
     private String postThumbnail;
@@ -22,8 +24,9 @@ public class Post {
     @Column(name = "post_title", nullable = false)
     private String postTitle;
 
-    @Column(name = "post_author", nullable = false)
-    private String postAuthor;
+    @ManyToOne
+    @JoinColumn(name = "post_author", referencedColumnName = "id", nullable = false)
+    private User postAuthor;
 
     @Column(name = "post_address", nullable = false)
     private String postAddress;
@@ -35,7 +38,7 @@ public class Post {
     private int postPrice;
 
     @Column(name = "post_date", nullable = false)
-    private String postDate;
+    private LocalDateTime postDate;
 
     public void setPostThumbnail(String postThumbnail) {
         this.postThumbnail = postThumbnail;
@@ -57,7 +60,7 @@ public class Post {
         this.postPrice = postPrice;
     }
 
-    public void setPostDate(String postDate) {
+    public void setPostDate(LocalDateTime postDate) {
         this.postDate = postDate;
     }
 }
