@@ -1,6 +1,7 @@
 package com.dsm.shaworld.domain.post.controller;
 
 import com.dsm.shaworld.domain.post.service.PostService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +28,7 @@ public class PostController {
         @RequestParam(value="address") String address,
         @RequestParam(value="detail") String detail,
         @RequestParam(value="price") int price,
-        @RequestParam(value="date") LocalDateTime date,
+        @RequestParam(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date,
         @RequestPart(name="thumbnail") @Valid MultipartFile file
     ) throws IOException {
         postService.createPost(token, title, address, detail, price, date, file);
