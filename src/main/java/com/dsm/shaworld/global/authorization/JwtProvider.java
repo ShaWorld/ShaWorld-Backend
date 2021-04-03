@@ -8,7 +8,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Component
@@ -16,7 +15,7 @@ public class JwtProvider {
     @Value("${auth.jwt.secret}")
     private String secretKey;
 
-    private final long JWT_ACCESS_EXPIRATION = 10 * 60 * 6 * 24; // 1일
+    private final long JWT_ACCESS_EXPIRATION = 10 * 60 * 6 * 24 * 7; // 7일
 
     public String generateAccessToken(String userEmail) {
         return Jwts.builder()
@@ -42,9 +41,5 @@ public class JwtProvider {
         } catch(Exception e) {
             throw new InvalidTokenException();
         }
-    }
-
-    public String getId(String token) {
-        return String.valueOf(Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject());
     }
 }
