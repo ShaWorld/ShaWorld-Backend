@@ -1,5 +1,6 @@
 package com.dsm.shaworld.domain.post.controller;
 
+import com.dsm.shaworld.domain.post.dto.GetPostResponse;
 import com.dsm.shaworld.domain.post.service.PostService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -32,5 +33,11 @@ public class PostController {
         @RequestPart(name="thumbnail") @Valid MultipartFile file
     ) throws IOException {
         postService.createPost(token, title, address, detail, price, date, file);
+    }
+
+    @GetMapping("/{postId}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public GetPostResponse getPost(@PathVariable(value = "postId") int postId) {
+        return postService.getPost(postId);
     }
 }
