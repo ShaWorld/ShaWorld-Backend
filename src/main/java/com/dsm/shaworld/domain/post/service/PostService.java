@@ -6,7 +6,7 @@ import com.dsm.shaworld.domain.post.repository.PostRepository;
 import com.dsm.shaworld.domain.user.dto.UserInfoResponse;
 import com.dsm.shaworld.domain.user.entity.User;
 import com.dsm.shaworld.domain.user.service.UserService;
-import com.dsm.shaworld.global.exception.handler.PostNotFoundException;
+import com.dsm.shaworld.global.exception.PostNotFoundException;
 import com.dsm.shaworld.global.s3service.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
