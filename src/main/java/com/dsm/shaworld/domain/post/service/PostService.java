@@ -1,5 +1,6 @@
 package com.dsm.shaworld.domain.post.service;
 
+import com.dsm.shaworld.domain.post.dto.GetLatestPostsResponse;
 import com.dsm.shaworld.domain.post.dto.GetPostResponse;
 import com.dsm.shaworld.domain.post.entity.Post;
 import com.dsm.shaworld.domain.post.repository.PostRepository;
@@ -9,6 +10,10 @@ import com.dsm.shaworld.domain.user.service.UserService;
 import com.dsm.shaworld.global.exception.PostNotFoundException;
 import com.dsm.shaworld.global.s3service.S3Service;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,7 +47,8 @@ public class PostService {
         return;
     }
 
-    public GetPostResponse getPost(int postId) {
+    public GetPostResponse getPost(String token, int postId) {
+        userService.getInfoByTokenForServer(token);
         Post post = postRepository.findByPostId(postId).orElseThrow(() -> new PostNotFoundException(postId));
 
         UserInfoResponse author =
@@ -61,5 +67,31 @@ public class PostService {
             .postPrice(post.getPostPrice())
             .postDate(post.getPostDate())
             .build();
+    }
+
+    public Page<GetLatestPostsResponse> getLatestPosts(String token, Pageable pageable) {
+        userService.getInfoByTokenForServer(token);
+
+        PageRequest latestPostPageRequest = PageRequest.of(
+            pageable.getPageNumber(),
+            pageable.getPageSize(),
+            Sort.by(Sort.Order.desc("postDate"))
+        );
+
+        return postRepository.findAll(latestPostPageRequest).map((item) -> (
+            GetLatestPostsResponse.builder()
+                .postThumbnail(item.getPostThumbnail())
+                .postTitle(item.getPostTitle())
+                .postAuthor(
+                    UserInfoResponse.builder()
+                    .userProfile(item.getPostAuthor().getUserProfile())
+                    .userNickname(item.getPostAuthor().getUserNickname())
+                    .userEmail(item.getPostAuthor().getUserEmail())
+                    .build()
+                )
+                .postAddress(item.getPostAddress())
+                .postPrice(item.getPostPrice())
+                .build()
+        ));
     }
 }
