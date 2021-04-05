@@ -2,7 +2,6 @@ package com.dsm.shaworld.domain.post.controller;
 
 import com.dsm.shaworld.domain.post.dto.GetLatestPostsResponse;
 import com.dsm.shaworld.domain.post.dto.GetPostResponse;
-import com.dsm.shaworld.domain.post.entity.Post;
 import com.dsm.shaworld.domain.post.service.PostService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
