@@ -1,7 +1,11 @@
 package com.dsm.shaworld.domain.post.controller;
 
+import com.dsm.shaworld.domain.post.dto.GetLatestPostsResponse;
 import com.dsm.shaworld.domain.post.dto.GetPostResponse;
+import com.dsm.shaworld.domain.post.entity.Post;
 import com.dsm.shaworld.domain.post.service.PostService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +41,16 @@ public class PostController {
 
     @GetMapping("/{postId}")
     @ResponseStatus(value = HttpStatus.OK)
-    public GetPostResponse getPost(@PathVariable(value = "postId") int postId) {
-        return postService.getPost(postId);
+    public GetPostResponse getPost(
+        @RequestHeader(value="Authorization") String token,
+        @PathVariable(value = "postId") int postId
+    ) {
+        return postService.getPost(token, postId);
+    }
+
+    @GetMapping("/get-latest-posts")
+    @ResponseStatus(value = HttpStatus.OK)
+    public Page<GetLatestPostsResponse> getPosts(@RequestHeader(value="Authorization") String token, Pageable pageable) {
+        return postService.getLatestPosts(token, pageable);
     }
 }
