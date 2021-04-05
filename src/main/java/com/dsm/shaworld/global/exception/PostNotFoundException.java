@@ -1,5 +1,6 @@
-package com.dsm.shaworld.global.exception.handler;
+package com.dsm.shaworld.global.exception;
 
+import com.dsm.shaworld.global.exception.handler.CommonException;
 import org.springframework.http.HttpStatus;
 
 public class PostNotFoundException extends CommonException {
