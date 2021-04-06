@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,7 +34,7 @@ public class PostController {
         @RequestParam(value="detail") String detail,
         @RequestParam(value="price") int price,
         @RequestParam(value="date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date,
-        @RequestPart(name="thumbnail") @Valid MultipartFile file
+        @RequestPart(name="thumbnail") @Nullable MultipartFile file
     ) throws IOException {
         postService.createPost(token, title, address, detail, price, date, file);
     }
@@ -49,7 +50,7 @@ public class PostController {
 
     @GetMapping("/get-latest-posts")
     @ResponseStatus(value = HttpStatus.OK)
-    public Page<GetLatestPostsResponse> getPosts(@RequestHeader(value="Authorization") String token, Pageable pageable) {
+    public Page<GetLatestPostsResponse> getLatestPosts(@RequestHeader(value="Authorization") String token, Pageable pageable) {
         return postService.getLatestPosts(token, pageable);
     }
 }
