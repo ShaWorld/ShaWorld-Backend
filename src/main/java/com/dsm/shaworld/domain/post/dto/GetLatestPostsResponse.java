@@ -1,6 +1,5 @@
 package com.dsm.shaworld.domain.post.dto;
 
-import com.dsm.shaworld.domain.user.dto.UserInfoResponse;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.lang.Nullable;
@@ -20,7 +19,7 @@ public class GetLatestPostsResponse {
     private String postTitle;
 
     @NotBlank
-    private UserInfoResponse postAuthor;
+    private String postAuthor;
 
     @NotBlank
     private String postAddress;
