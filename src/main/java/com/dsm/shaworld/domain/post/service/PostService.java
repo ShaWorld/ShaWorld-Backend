@@ -29,8 +29,11 @@ public class PostService {
 
     public void createPost(String token, String title, String address, String detail, int price, LocalDateTime date, MultipartFile file) throws IOException {
         User user = userService.getInfoByTokenForServer(token);
+        String thumbnailPath = null;
 
-        String thumbnailPath = s3Service.uploadS3File(file);
+        if(file != null) {
+            thumbnailPath = s3Service.uploadS3File(file);
+        }
 
         postRepository.save(
             Post.builder()
@@ -80,15 +83,10 @@ public class PostService {
 
         return postRepository.findAll(latestPostPageRequest).map((item) -> (
             GetLatestPostsResponse.builder()
+                .postId(item.getPostId())
                 .postThumbnail(item.getPostThumbnail())
                 .postTitle(item.getPostTitle())
-                .postAuthor(
-                    UserInfoResponse.builder()
-                    .userProfile(item.getPostAuthor().getUserProfile())
-                    .userNickname(item.getPostAuthor().getUserNickname())
-                    .userEmail(item.getPostAuthor().getUserEmail())
-                    .build()
-                )
+                .postAuthor(item.getPostAuthor().getUserNickname())
                 .postAddress(item.getPostAddress())
                 .postPrice(item.getPostPrice())
                 .build()
