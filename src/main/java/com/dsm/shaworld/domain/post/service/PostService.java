@@ -50,8 +50,7 @@ public class PostService {
         return;
     }
 
-    public GetPostResponse getPost(String token, int postId) {
-        userService.getInfoByTokenForServer(token);
+    public GetPostResponse getPost(int postId) {
         Post post = postRepository.findByPostId(postId).orElseThrow(() -> new PostNotFoundException(postId));
 
         UserInfoResponse author =
@@ -64,7 +63,7 @@ public class PostService {
         return GetPostResponse.builder()
             .postThumbnail(post.getPostThumbnail())
             .postTitle(post.getPostTitle())
-            .postAuthor(author)
+            .postAuthor(post.getPostAuthor().getUserNickname())
             .postAddress(post.getPostAddress())
             .postDetail(post.getPostDetail())
             .postPrice(post.getPostPrice())
@@ -72,9 +71,7 @@ public class PostService {
             .build();
     }
 
-    public Page<GetLatestPostsResponse> getLatestPosts(String token, Pageable pageable) {
-        userService.getInfoByTokenForServer(token);
-
+    public Page<GetLatestPostsResponse> getLatestPosts(Pageable pageable) {
         PageRequest latestPostPageRequest = PageRequest.of(
             pageable.getPageNumber(),
             pageable.getPageSize(),
