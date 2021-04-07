@@ -45,12 +45,12 @@ public class PostController {
         @RequestHeader(value="Authorization") String token,
         @PathVariable(value = "postId") int postId
     ) {
-        return postService.getPost(token, postId);
+        return postService.getPost(postId);
     }
 
     @GetMapping("/get-latest-posts")
     @ResponseStatus(value = HttpStatus.OK)
     public Page<GetLatestPostsResponse> getLatestPosts(@RequestHeader(value="Authorization") String token, Pageable pageable) {
-        return postService.getLatestPosts(token, pageable);
+        return postService.getLatestPosts(pageable);
     }
 }
