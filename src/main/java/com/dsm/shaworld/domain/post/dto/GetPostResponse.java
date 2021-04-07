@@ -13,7 +13,7 @@ public class GetPostResponse {
 
     private String postTitle;
 
-    private UserInfoResponse postAuthor;
+    private String postAuthor;
 
     private String postAddress;
 
