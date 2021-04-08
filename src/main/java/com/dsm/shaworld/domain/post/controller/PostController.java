@@ -45,12 +45,18 @@ public class PostController {
         @RequestHeader(value="Authorization") String token,
         @PathVariable(value = "postId") int postId
     ) {
-        return postService.getPost(postId);
+        return postService.getPostDetail(postId);
     }
 
     @GetMapping("/get-latest-posts")
     @ResponseStatus(value = HttpStatus.OK)
-    public Page<GetLatestPostsResponse> getLatestPosts(@RequestHeader(value="Authorization") String token, Pageable pageable) {
+    public Page<GetLatestPostsResponse> getLatestPosts(Pageable pageable) {
         return postService.getLatestPosts(pageable);
+    }
+
+    @GetMapping("/delete/{postId}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void deletePost(@RequestHeader(value="Authorization") String token, @PathVariable(value = "postId") int postId) {
+        postService.deletePost(token, postId);
     }
 }
