@@ -1,6 +1,5 @@
 package com.dsm.shaworld.domain.post.dto;
 
-import com.dsm.shaworld.domain.user.dto.UserInfoResponse;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -13,7 +12,9 @@ public class GetPostResponse {
 
     private String postTitle;
 
-    private String postAuthor;
+    private String postAuthorProfile;
+
+    private String postAuthorNickname;
 
     private String postAddress;
 
