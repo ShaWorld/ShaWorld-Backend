@@ -77,6 +77,7 @@ public class UserService {
         return jwtProvider.validateToken(resolvedToken);
     }
 
+    @Transactional
     public void deleteUser(String token) {
         String email = getEmailFromToken(token);
         userRepository.delete(getInfoByUserEmail(email));
