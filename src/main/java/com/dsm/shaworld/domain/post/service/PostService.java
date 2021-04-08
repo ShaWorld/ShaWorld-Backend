@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -99,12 +100,13 @@ public class PostService {
         ));
     }
 
+    @Transactional
     public void deletePost(String token, int postId) {
         User user = userService.getInfoByTokenForServer(token);
         Post post = getPost(postId);
 
         if(user == post.getPostAuthor()) {
-            postRepository.delete(post);
+            postRepository.deleteById(postId);
         } else {
             throw new AuthorMismatchException(post.getPostAuthor().getUserNickname(), user.getUserNickname());
         }
