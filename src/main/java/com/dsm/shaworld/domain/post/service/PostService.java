@@ -7,6 +7,7 @@ import com.dsm.shaworld.domain.post.repository.PostRepository;
 import com.dsm.shaworld.domain.user.dto.UserInfoResponse;
 import com.dsm.shaworld.domain.user.entity.User;
 import com.dsm.shaworld.domain.user.service.UserService;
+import com.dsm.shaworld.global.exception.AuthorMismatchException;
 import com.dsm.shaworld.global.exception.PostNotFoundException;
 import com.dsm.shaworld.global.s3service.S3Service;
 import lombok.RequiredArgsConstructor;
@@ -50,25 +51,33 @@ public class PostService {
         return;
     }
 
-    public GetPostResponse getPost(int postId) {
+    private Post getPost(int postId) {
         Post post = postRepository.findByPostId(postId).orElseThrow(() -> new PostNotFoundException(postId));
 
-        UserInfoResponse author =
-            UserInfoResponse.builder()
-            .userEmail(post.getPostAuthor().getUserEmail())
-            .userNickname(post.getPostAuthor().getUserNickname())
-            .userProfile(post.getPostAuthor().getUserProfile())
-            .build();
-
-        return GetPostResponse.builder()
+        return Post.builder()
             .postThumbnail(post.getPostThumbnail())
             .postTitle(post.getPostTitle())
-            .postAuthor(post.getPostAuthor().getUserNickname())
+            .postAuthor(post.getPostAuthor())
             .postAddress(post.getPostAddress())
             .postDetail(post.getPostDetail())
             .postPrice(post.getPostPrice())
             .postDate(post.getPostDate())
             .build();
+    }
+
+    public GetPostResponse getPostDetail(int postId) {
+        Post post = getPost(postId);
+
+        return GetPostResponse.builder()
+                .postThumbnail(post.getPostThumbnail())
+                .postTitle(post.getPostTitle())
+                .postAuthorProfile(post.getPostAuthor().getUserProfile())
+                .postAuthorNickname(post.getPostAuthor().getUserNickname())
+                .postAddress(post.getPostAddress())
+                .postDetail(post.getPostDetail())
+                .postPrice(post.getPostPrice())
+                .postDate(post.getPostDate())
+                .build();
     }
 
     public Page<GetLatestPostsResponse> getLatestPosts(Pageable pageable) {
@@ -88,5 +97,18 @@ public class PostService {
                 .postPrice(item.getPostPrice())
                 .build()
         ));
+    }
+
+    public void deletePost(String token, int postId) {
+        User user = userService.getInfoByTokenForServer(token);
+        Post post = getPost(postId);
+
+        if(user == post.getPostAuthor()) {
+            postRepository.delete(post);
+        } else {
+            throw new AuthorMismatchException(post.getPostAuthor().getUserNickname(), user.getUserNickname());
+        }
+
+        return;
     }
 }
