@@ -42,7 +42,6 @@ public class PostController {
     @GetMapping("/{postId}")
     @ResponseStatus(value = HttpStatus.OK)
     public GetPostResponse getPost(
-        @RequestHeader(value="Authorization") String token,
         @PathVariable(value = "postId") int postId
     ) {
         return postService.getPostDetail(postId);
