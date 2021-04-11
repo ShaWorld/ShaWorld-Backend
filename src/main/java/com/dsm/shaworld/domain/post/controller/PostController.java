@@ -53,6 +53,12 @@ public class PostController {
         return postService.getLatestPosts(pageable);
     }
 
+    @GetMapping("/search")
+    @ResponseStatus(value = HttpStatus.OK)
+    public Page<GetLatestPostsResponse> searchLatestPosts(Pageable pageable, @RequestParam(value="keyword") String keyword) {
+        return postService.searchLatestPosts(pageable, keyword);
+    }
+
     @GetMapping("/delete/{postId}")
     @ResponseStatus(value = HttpStatus.OK)
     public void deletePost(@RequestHeader(value="Authorization") String token, @PathVariable(value = "postId") int postId) {
