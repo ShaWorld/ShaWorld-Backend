@@ -100,6 +100,25 @@ public class PostService {
         ));
     }
 
+    public Page<GetLatestPostsResponse> searchLatestPosts(Pageable pageable, String keyword) {
+        PageRequest latestPostPageRequest = PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by(Sort.Order.desc("postDate"))
+        );
+
+        return postRepository.findByPostTitleContaining(latestPostPageRequest, keyword).map((item) -> (
+            GetLatestPostsResponse.builder()
+                .postId(item.getPostId())
+                .postThumbnail(item.getPostThumbnail())
+                .postTitle(item.getPostTitle())
+                .postAuthor(item.getPostAuthor().getUserNickname())
+                .postAddress(item.getPostAddress())
+                .postPrice(item.getPostPrice())
+                .build()
+        ));
+    }
+
     @Transactional
     public void deletePost(String token, int postId) {
         User user = userService.getInfoByTokenForServer(token);
