@@ -4,7 +4,6 @@ import com.dsm.shaworld.domain.post.dto.GetLatestPostsResponse;
 import com.dsm.shaworld.domain.post.dto.GetPostResponse;
 import com.dsm.shaworld.domain.post.entity.Post;
 import com.dsm.shaworld.domain.post.repository.PostRepository;
-import com.dsm.shaworld.domain.user.dto.UserInfoResponse;
 import com.dsm.shaworld.domain.user.entity.User;
 import com.dsm.shaworld.domain.user.service.UserService;
 import com.dsm.shaworld.global.exception.AuthorMismatchException;
@@ -52,18 +51,10 @@ public class PostService {
         return;
     }
 
-    private Post getPost(int postId) {
+    public Post getPost(int postId) {
         Post post = postRepository.findByPostId(postId).orElseThrow(() -> new PostNotFoundException(postId));
 
-        return Post.builder()
-            .postThumbnail(post.getPostThumbnail())
-            .postTitle(post.getPostTitle())
-            .postAuthor(post.getPostAuthor())
-            .postAddress(post.getPostAddress())
-            .postDetail(post.getPostDetail())
-            .postPrice(post.getPostPrice())
-            .postDate(post.getPostDate())
-            .build();
+        return post;
     }
 
     public GetPostResponse getPostDetail(int postId) {
