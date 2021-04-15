@@ -9,8 +9,10 @@ import com.dsm.shaworld.domain.post.service.PostService;
 import com.dsm.shaworld.domain.user.entity.User;
 import com.dsm.shaworld.domain.user.service.UserService;
 import com.dsm.shaworld.global.exception.ApplyDuplicateException;
+import com.dsm.shaworld.global.exception.ResponseDuplicateException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,6 +48,7 @@ public class ApplyService {
                 .applyPostId(item.getApplyPost().getPostId())
                 .applyPostTitle(item.getApplyPost().getPostTitle())
                 .applyApplicant(item.getApplyApplicant().getUserNickname())
+                .applyState(item.getApplyState())
                 .build()
         ).collect(Collectors.toList());
     }
@@ -67,5 +70,29 @@ public class ApplyService {
         );
 
         return;
+    }
+
+    @Transactional
+    public void acceptApply(String token, int applyId) {
+        User user = userService.getInfoByTokenForServer(token);
+        Apply apply = applyRepository.findByApplyId(applyId);
+
+        if (user.getId() == apply.getApplyPost().getPostAuthor().getId() && apply.getApplyState().equals("대기중")) {
+            apply.setApplyState("승인");
+        } else {
+            throw new ResponseDuplicateException();
+        }
+    }
+
+    @Transactional
+    public void rejectApply(String token, int applyId) {
+        User user = userService.getInfoByTokenForServer(token);
+        Apply apply = applyRepository.findByApplyId(applyId);
+
+        if (user.getId() == apply.getApplyPost().getPostAuthor().getId() && apply.getApplyState().equals("대기중")) {
+            apply.setApplyState("거절");
+        } else {
+            throw new ResponseDuplicateException();
+        }
     }
 }
