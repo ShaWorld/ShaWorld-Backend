@@ -33,4 +33,16 @@ public class ApplyController {
     public void applyPost(@RequestHeader(value = "Authorization") String token, @PathVariable(value = "postId") int postId) {
         applyService.applyPost(token, postId);
     }
+
+    @GetMapping("/accept/{applyId}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void accepApply(@RequestHeader(value = "Authorization") String token, @PathVariable(value = "applyId") int applyId) {
+        applyService.acceptApply(token, applyId);
+    }
+
+    @GetMapping("/reject/{applyId}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void rejectApply(@RequestHeader(value = "Authorization") String token, @PathVariable(value = "applyId") int applyId) {
+        applyService.rejectApply(token, applyId);
+    }
 }
