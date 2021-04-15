@@ -28,4 +28,6 @@ public class Apply {
 
     @Column(name = "apply_state", nullable = false)
     private String applyState;
+
+    public void setApplyState(String applyState) { this.applyState = applyState; }
 }
