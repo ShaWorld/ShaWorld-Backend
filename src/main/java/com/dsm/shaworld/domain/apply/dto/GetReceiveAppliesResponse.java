@@ -19,4 +19,7 @@ public class GetReceiveAppliesResponse {
 
     @NotBlank
     private String applyApplicant;
+
+    @NotBlank
+    private String applyState;
 }
