@@ -21,10 +21,10 @@ class DatabaseConfig {
     @Bean
     public DataSource dataSource() {
         return DataSourceBuilder.create()
-                .driverClassName(driverClassName)
-                .url(url)
-                .username(username)
-                .password(password)
-                .build();
+            .driverClassName(driverClassName)
+            .url(url)
+            .username(username)
+            .password(password)
+            .build();
     }
 }
