@@ -20,16 +20,16 @@ import java.io.IOException;
 public class S3Service {
     private AmazonS3 s3Client;
 
-    @Value("${cloud.aws.credentials.accessKey}")
+    @Value("${cloud.aws.credentials.accessKey:a}")
     private String accessKey;
 
-    @Value("${cloud.aws.credentials.secretKey}")
+    @Value("${cloud.aws.credentials.secretKey:b}")
     private String secretKey;
 
-    @Value("${cloud.aws.s3.bucket}")
+    @Value("${cloud.aws.s3.bucket:c}")
     private String bucket;
 
-    @Value("${cloud.aws.region.static}")
+    @Value("${cloud.aws.region.static:d}")
     private String region;
 
     @PostConstruct

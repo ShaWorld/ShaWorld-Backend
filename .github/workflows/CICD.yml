@@ -9,6 +9,11 @@ on:
 jobs:
   CI:
     runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+      AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+      S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+      S3_REGION: ${{ secrets.S3_REGION }}
 
     steps:
       - uses: actions/checkout@v2
