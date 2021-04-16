@@ -47,7 +47,8 @@ public class ApplyService {
                 .applyId(item.getApplyId())
                 .applyPostId(item.getApplyPost().getPostId())
                 .applyPostTitle(item.getApplyPost().getPostTitle())
-                .applyApplicant(item.getApplyApplicant().getUserNickname())
+                .applyApplicantProfile(item.getApplyApplicant().getUserProfile())
+                .applyApplicantNickname(item.getApplyApplicant().getUserNickname())
                 .applyState(item.getApplyState())
                 .build()
         ).collect(Collectors.toList());
@@ -65,7 +66,7 @@ public class ApplyService {
             Apply.builder()
                 .applyPost(post)
                 .applyApplicant(user)
-                .applyState("대기중")
+                .applyState("pending")
                 .build()
         );
 
@@ -77,8 +78,8 @@ public class ApplyService {
         User user = userService.getInfoByTokenForServer(token);
         Apply apply = applyRepository.findByApplyId(applyId);
 
-        if (user.getId() == apply.getApplyPost().getPostAuthor().getId() && apply.getApplyState().equals("대기중")) {
-            apply.setApplyState("승인");
+        if (user.getId() == apply.getApplyPost().getPostAuthor().getId() && apply.getApplyState().equals("pending")) {
+            apply.setApplyState("accept");
         } else {
             throw new ResponseDuplicateException();
         }
@@ -89,8 +90,8 @@ public class ApplyService {
         User user = userService.getInfoByTokenForServer(token);
         Apply apply = applyRepository.findByApplyId(applyId);
 
-        if (user.getId() == apply.getApplyPost().getPostAuthor().getId() && apply.getApplyState().equals("대기중")) {
-            apply.setApplyState("거절");
+        if (user.getId() == apply.getApplyPost().getPostAuthor().getId() && apply.getApplyState().equals("pending")) {
+            apply.setApplyState("reject");
         } else {
             throw new ResponseDuplicateException();
         }
