@@ -18,7 +18,10 @@ public class GetReceiveAppliesResponse {
     private String applyPostTitle;
 
     @NotBlank
-    private String applyApplicant;
+    private String applyApplicantProfile;
+
+    @NotBlank
+    private String applyApplicantNickname;
 
     @NotBlank
     private String applyState;
