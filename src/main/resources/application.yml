@@ -1,10 +1,20 @@
+spring:
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    generate-ddl: false
+    show-sql: false
+  output:
+    ansi:
+      enabled: always
+
 auth:
   jwt:
     secret: ${SECRET_KEY:wanseoSecret}
 
 server:
-  port:
-    8000
+  port: 8000
+  address: 0.0.0.0
 
 cloud:
   aws:
