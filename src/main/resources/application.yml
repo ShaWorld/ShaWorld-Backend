@@ -26,4 +26,4 @@ cloud:
     region:
       static: ${S3_REGION}
     stack:
-      auto: fasle
+      auto: false
